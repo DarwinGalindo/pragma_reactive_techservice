@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE,
         unmappedSourcePolicy = org.mapstruct.ReportingPolicy.IGNORE)
-public interface TechnologyRequestMapper {
+public interface TechnologyDtoMapper {
     Technology toModel(TechnologyRequest technologyRequest);
     TechnologyResponse toResponse(Technology technology);
 

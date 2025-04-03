@@ -9,9 +9,6 @@ import com.darwin.techservice.infrastructure.output.jpa.repository.ITechnologyRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @RequiredArgsConstructor
 @Configuration
@@ -29,9 +26,4 @@ public class BeanConfiguration {
         return new TechnologyR2dbcAdapter(technologyRepository, technologyEntityMapper);
     }
 
-    @Bean
-    @Primary
-    public Validator springValidator() {
-        return new LocalValidatorFactoryBean();
-    }
 }

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.darwin.techservice.application.util.Constants.*;
+import static com.darwin.techservice.application.util.Messages.*;
 
 @Getter
 @Setter
