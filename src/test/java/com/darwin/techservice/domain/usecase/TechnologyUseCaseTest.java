@@ -1,6 +1,7 @@
 package com.darwin.techservice.domain.usecase;
 
 import com.darwin.techservice.domain.exception.TechnologyNameAlreadyExistsException;
+import com.darwin.techservice.domain.exception.TechnologyNotFoundException;
 import com.darwin.techservice.domain.model.Technology;
 import com.darwin.techservice.domain.spi.ITechnologyPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,6 +101,19 @@ class TechnologyUseCaseTest {
         StepVerifier.create(technologyUseCase.findById(id))
                 .expectNext(technology)
                 .verifyComplete();
+
+        verify(technologyPersistencePort).findById(id);
+    }
+
+    @Test
+    void findById_shouldThrowNotFoundException() {
+        Long id = 11111L;
+
+        when(technologyPersistencePort.findById(id)).thenReturn(Mono.empty());
+
+        StepVerifier.create(technologyUseCase.findById(id))
+                .expectError(TechnologyNotFoundException.class)
+                .verify();
 
         verify(technologyPersistencePort).findById(id);
     }
