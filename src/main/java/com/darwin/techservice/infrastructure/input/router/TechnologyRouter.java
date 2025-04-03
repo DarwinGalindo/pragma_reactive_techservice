@@ -20,6 +20,7 @@ public class TechnologyRouter {
     public RouterFunction<ServerResponse> technologyRoutes() {
         return route()
                 .POST(TECHNOLOGY_RESOURCE, technologyHandler::createTechnology)
+                .GET(TECHNOLOGY_RESOURCE, technologyHandler::findAllOrderedByName)
                 .build();
     }
 

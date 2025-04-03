@@ -3,7 +3,7 @@ package com.darwin.techservice.infrastructure.configuration;
 import com.darwin.techservice.domain.api.ITechnologyServicePort;
 import com.darwin.techservice.domain.spi.ITechnologyPersistencePort;
 import com.darwin.techservice.domain.usecase.TechnologyUseCase;
-import com.darwin.techservice.infrastructure.output.jpa.adapter.TechnologyJpaAdapter;
+import com.darwin.techservice.infrastructure.output.jpa.adapter.TechnologyR2dbcAdapter;
 import com.darwin.techservice.infrastructure.output.jpa.mapper.TechnologyEntityMapper;
 import com.darwin.techservice.infrastructure.output.jpa.repository.ITechnologyRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class BeanConfiguration {
 
     @Bean
     public ITechnologyPersistencePort technologyPersistencePort() {
-        return new TechnologyJpaAdapter(technologyRepository, technologyEntityMapper);
+        return new TechnologyR2dbcAdapter(technologyRepository, technologyEntityMapper);
     }
 
     @Bean
