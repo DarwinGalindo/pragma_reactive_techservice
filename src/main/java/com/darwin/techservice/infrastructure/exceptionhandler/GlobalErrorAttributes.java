@@ -1,6 +1,7 @@
 package com.darwin.techservice.infrastructure.exceptionhandler;
 
 import com.darwin.techservice.domain.exception.TechnologyNameAlreadyExistsException;
+import com.darwin.techservice.domain.exception.TechnologyNotFoundException;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
             message = ExceptionMessage.TECHNOLOGY_NAME_ALREADY_EXISTS.getMessage();
         } else if (error instanceof ServerWebInputException) {
             status = HttpStatus.BAD_REQUEST;
+        } else if (error instanceof TechnologyNotFoundException) {
+            status = HttpStatus.NOT_FOUND;
+            message = ExceptionMessage.TECHNOLOGY_NOT_FOUND.getMessage();
         }
 
         Map<String, Object> errorAttributes = new HashMap<>();

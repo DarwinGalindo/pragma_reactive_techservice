@@ -90,4 +90,17 @@ class TechnologyUseCaseTest {
 
         verify(technologyPersistencePort).findAllOrderedByName(page, size, ascending);
     }
+
+    @Test
+    void findById_shouldReturn() {
+        Long id = technology.getId();
+
+        when(technologyPersistencePort.findById(id)).thenReturn(Mono.just(technology));
+
+        StepVerifier.create(technologyUseCase.findById(id))
+                .expectNext(technology)
+                .verifyComplete();
+
+        verify(technologyPersistencePort).findById(id);
+    }
 }

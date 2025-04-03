@@ -9,4 +9,5 @@ public interface ITechnologyPersistencePort {
 
     Mono<Boolean> existsTechnology(String name);
     Flux<Technology> findAllOrderedByName(int page, int size, boolean ascending);
+    Mono<Technology> findById(Long id);
 }

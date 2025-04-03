@@ -8,4 +8,5 @@ public interface ITechnologyHandler {
     Mono<ServerResponse> createTechnology(ServerRequest request);
 
     Mono<ServerResponse> findAllOrderedByName(ServerRequest request);
+    Mono<ServerResponse> findById(ServerRequest request);
 }

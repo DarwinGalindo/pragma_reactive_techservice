@@ -39,4 +39,11 @@ public class TechnologyHandler implements ITechnologyHandler {
                 .flatMap(response -> ServerResponse.ok().bodyValue(technologyDtoMapper.toResponseList(response)));
 
     }
+
+    @Override
+    public Mono<ServerResponse> findById(ServerRequest request) {
+        return technologyServicePort.findById(Long.valueOf(request.pathVariable("id")))
+                .flatMap(technology -> ServerResponse.ok()
+                        .bodyValue(technologyDtoMapper.toResponse(technology)));
+    }
 }

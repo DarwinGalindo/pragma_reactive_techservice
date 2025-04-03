@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static com.darwin.techservice.infrastructure.util.Routes.TECHNOLOGY_RESOURCE;
+import static com.darwin.techservice.infrastructure.util.Routes.TECHNOLOGY_RESOURCE_ID;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -21,6 +22,7 @@ public class TechnologyRouter {
         return route()
                 .POST(TECHNOLOGY_RESOURCE, technologyHandler::createTechnology)
                 .GET(TECHNOLOGY_RESOURCE, technologyHandler::findAllOrderedByName)
+                .GET(TECHNOLOGY_RESOURCE_ID, technologyHandler::findById)
                 .build();
     }
 

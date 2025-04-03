@@ -2,6 +2,7 @@ package com.darwin.techservice.domain.usecase;
 
 import com.darwin.techservice.domain.api.ITechnologyServicePort;
 import com.darwin.techservice.domain.exception.TechnologyNameAlreadyExistsException;
+import com.darwin.techservice.domain.exception.TechnologyNotFoundException;
 import com.darwin.techservice.domain.model.Technology;
 import com.darwin.techservice.domain.spi.ITechnologyPersistencePort;
 import reactor.core.publisher.Flux;
@@ -26,5 +27,11 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     public Flux<Technology> findAllOrderedByName(int page, int size, boolean ascending) {
         return technologyPersistencePort
                 .findAllOrderedByName(page, size, ascending);
+    }
+
+    @Override
+    public Mono<Technology> findById(Long id) {
+        return technologyPersistencePort.findById(id)
+                .switchIfEmpty(Mono.error(new TechnologyNotFoundException()));
     }
 }
