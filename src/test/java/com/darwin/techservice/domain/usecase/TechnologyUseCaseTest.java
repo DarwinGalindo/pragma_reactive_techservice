@@ -117,4 +117,30 @@ class TechnologyUseCaseTest {
 
         verify(technologyPersistencePort).findById(id);
     }
+
+    @Test
+    void existsById_shouldReturnTrue() {
+        Long id = 1L;
+
+        when(technologyPersistencePort.existsById(id)).thenReturn(Mono.just(true));
+
+        StepVerifier.create(technologyUseCase.existsById(id))
+                .expectNext(true)
+                .verifyComplete();
+
+        verify(technologyPersistencePort).existsById(id);
+    }
+
+    @Test
+    void existsById_shouldReturnFalse() {
+        Long id = 1111L;
+
+        when(technologyPersistencePort.existsById(id)).thenReturn(Mono.just(false));
+
+        StepVerifier.create(technologyUseCase.existsById(id))
+                .expectNext(false)
+                .verifyComplete();
+
+        verify(technologyPersistencePort).existsById(id);
+    }
 }

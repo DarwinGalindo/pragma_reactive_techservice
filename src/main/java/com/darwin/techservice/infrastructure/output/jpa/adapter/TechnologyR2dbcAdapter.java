@@ -47,4 +47,9 @@ public class TechnologyR2dbcAdapter implements ITechnologyPersistencePort {
         return technologyRepository.findById(id)
                 .map(technologyEntityMapper::toModel);
     }
+
+    @Override
+    public Mono<Boolean> existsById(Long id) {
+        return technologyRepository.existsById(id);
+    }
 }

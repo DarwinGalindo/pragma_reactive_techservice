@@ -9,4 +9,5 @@ public interface ITechnologyHandler {
 
     Mono<ServerResponse> findAllOrderedByName(ServerRequest request);
     Mono<ServerResponse> findById(ServerRequest request);
+    Mono<ServerResponse> existsById(ServerRequest request);
 }

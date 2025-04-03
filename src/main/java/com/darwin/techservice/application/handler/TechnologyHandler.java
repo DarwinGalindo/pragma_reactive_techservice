@@ -46,4 +46,10 @@ public class TechnologyHandler implements ITechnologyHandler {
                 .flatMap(technology -> ServerResponse.ok()
                         .bodyValue(technologyDtoMapper.toResponse(technology)));
     }
+
+    @Override
+    public Mono<ServerResponse> existsById(ServerRequest request) {
+        return technologyServicePort.existsById(Long.parseLong(request.pathVariable("id")))
+                .flatMap(exist -> ServerResponse.ok().bodyValue(exist));
+    }
 }

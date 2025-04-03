@@ -34,4 +34,9 @@ public class TechnologyUseCase implements ITechnologyServicePort {
         return technologyPersistencePort.findById(id)
                 .switchIfEmpty(Mono.error(new TechnologyNotFoundException()));
     }
+
+    @Override
+    public Mono<Boolean> existsById(Long id) {
+        return technologyPersistencePort.existsById(id);
+    }
 }
