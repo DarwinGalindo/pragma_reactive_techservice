@@ -133,4 +133,34 @@ class TechnologyR2DbcAdapterTest {
         verify(technologyRepository).findBy(pageable);
 
     }
+
+    @Test
+    void testFindById() {
+        Long id = 1L;
+        TechnologyEntity technologyEntity = new TechnologyEntity(id, "Tech 1", "Desc");
+        Technology technology = new Technology(id, technologyEntity.getName(), technologyEntity.getDescription());
+
+        when(technologyEntityMapper.toModel(technologyEntity)).thenReturn(technology);
+        when(technologyRepository.findById(id)).thenReturn(Mono.just(technologyEntity));
+
+        StepVerifier.create(technologyR2DbcAdapter.findById(id))
+                .expectNext(technology)
+                .verifyComplete();
+
+        verify(technologyRepository).findById(id);
+        verify(technologyEntityMapper).toModel(technologyEntity);
+    }
+
+    @Test
+    void testExistsById() {
+        Long id = 1L;
+
+        when(technologyRepository.existsById(id)).thenReturn(Mono.just(true));
+
+        StepVerifier.create(technologyR2DbcAdapter.existsById(id))
+                .expectNext(true)
+                .verifyComplete();
+
+        verify(technologyRepository).existsById(id);
+    }
 }

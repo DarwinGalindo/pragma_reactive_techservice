@@ -62,8 +62,11 @@ def coverageExcludes = [
 		'**/api/**',
 		'**/mapper/**',
 		'**/repository/**',
+		'**/documentation/**',
+		'**/configuration/**',
+		'**/exceptionhandler/**',
 		'**/*.test',
-		'**/generated/.*',
+		'**/generated/.*'
 ]
 
 jacoco {

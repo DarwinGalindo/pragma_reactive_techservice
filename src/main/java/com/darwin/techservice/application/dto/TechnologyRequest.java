@@ -3,13 +3,11 @@ package com.darwin.techservice.application.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import static com.darwin.techservice.application.util.Messages.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class TechnologyRequest {
     @NotBlank(message = TECHNOLOGY_NAME_NOT_BLANK)
