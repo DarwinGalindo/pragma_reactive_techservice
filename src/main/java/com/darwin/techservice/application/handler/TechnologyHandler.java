@@ -4,6 +4,7 @@ import com.darwin.techservice.application.dto.TechnologyRequest;
 import com.darwin.techservice.application.mapper.TechnologyDtoMapper;
 import com.darwin.techservice.application.util.ValidatorUtil;
 import com.darwin.techservice.domain.api.ITechnologyServicePort;
+import com.darwin.techservice.shared.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -31,10 +32,12 @@ public class TechnologyHandler implements ITechnologyHandler {
 
     @Override
     public Mono<ServerResponse> findAllOrderedByName(ServerRequest request) {
-        int page = Integer.parseInt(request.queryParam("page").orElse("0"));
-        int size = Integer.parseInt(request.queryParam("size").orElse("10"));
+        int page = Integer.parseInt(request.queryParam(Pagination.PAGE_PARAM).orElse(Pagination.DEFAULT_PAGE));
+        int size = Integer.parseInt(request.queryParam(Pagination.SIZE_PARAM).orElse(Pagination.DEFAULT_SIZE));
+        boolean sortAscending = request.queryParam(Pagination.SORT_ASCENDING).orElse(Pagination.DEFAULT_ASCENDING)
+                .equals(Pagination.ASCENDING_TRUE);
 
-        return technologyServicePort.findAllOrderedByName(page, size, true)
+        return technologyServicePort.findAllOrderedByName(page, size, sortAscending)
                 .collectList()
                 .flatMap(response -> ServerResponse.ok().bodyValue(technologyDtoMapper.toResponseList(response)));
 
