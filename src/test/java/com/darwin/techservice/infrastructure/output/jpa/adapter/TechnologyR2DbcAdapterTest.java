@@ -6,11 +6,14 @@ import com.darwin.techservice.infrastructure.output.jpa.mapper.TechnologyEntityM
 import com.darwin.techservice.infrastructure.output.jpa.repository.ITechnologyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class TechnologyR2DbcAdapterTest {
@@ -78,6 +81,7 @@ class TechnologyR2DbcAdapterTest {
         int size = 2;
         boolean ascending = true;
         Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         TechnologyEntity technologyEntity1 = new TechnologyEntity(1L, "Java", "Programming Language");
         TechnologyEntity technologyEntity2 = new TechnologyEntity(2L, "Python", "Programming Language");
@@ -88,7 +92,7 @@ class TechnologyR2DbcAdapterTest {
         Technology technology2 = new Technology(technologyEntity2.getId(),
                 technologyEntity2.getName(), technologyEntity2.getDescription());
 
-        when(technologyRepository.findAll(sort)).thenReturn(Flux.just(technologyEntity1, technologyEntity2));
+        when(technologyRepository.findBy(pageable)).thenReturn(Flux.just(technologyEntity1, technologyEntity2));
         when(technologyEntityMapper.toModel(technologyEntity1)).thenReturn(technology1);
         when(technologyEntityMapper.toModel(technologyEntity2)).thenReturn(technology2);
 
@@ -97,7 +101,7 @@ class TechnologyR2DbcAdapterTest {
                 .expectNext(technology2)
                 .verifyComplete();
 
-        verify(technologyRepository).findAll(sort);
+        verify(technologyRepository).findBy(pageable);
 
     }
 
@@ -107,6 +111,7 @@ class TechnologyR2DbcAdapterTest {
         int size = 2;
         boolean ascending = false;
         Sort sort = Sort.by(Sort.Direction.DESC, "name");
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         TechnologyEntity technologyEntity1 = new TechnologyEntity(1L, "Java", "Programming Language");
         TechnologyEntity technologyEntity2 = new TechnologyEntity(2L, "Python", "Programming Language");
@@ -117,7 +122,7 @@ class TechnologyR2DbcAdapterTest {
         Technology technology2 = new Technology(technologyEntity2.getId(),
                 technologyEntity2.getName(), technologyEntity2.getDescription());
 
-        when(technologyRepository.findAll(sort)).thenReturn(Flux.just(technologyEntity2, technologyEntity1));
+        when(technologyRepository.findBy(pageable)).thenReturn(Flux.just(technologyEntity2, technologyEntity1));
         when(technologyEntityMapper.toModel(technologyEntity1)).thenReturn(technology1);
         when(technologyEntityMapper.toModel(technologyEntity2)).thenReturn(technology2);
 
@@ -126,7 +131,7 @@ class TechnologyR2DbcAdapterTest {
                 .expectNext(technology1)
                 .verifyComplete();
 
-        verify(technologyRepository).findAll(sort);
+        verify(technologyRepository).findBy(pageable);
 
     }
 }
