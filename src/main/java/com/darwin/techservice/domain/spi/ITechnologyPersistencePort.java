@@ -5,7 +5,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ITechnologyPersistencePort {
-    Mono<Technology> createTechnology(Technology technology);
+    Mono<Technology> create(Technology technology);
 
     Mono<Boolean> existsTechnology(String name);
     Flux<Technology> findAllOrderedByName(int page, int size, boolean ascending);

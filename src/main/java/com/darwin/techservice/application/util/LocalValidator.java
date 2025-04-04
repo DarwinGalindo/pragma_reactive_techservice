@@ -1,6 +1,8 @@
 package com.darwin.techservice.application.util;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -8,14 +10,14 @@ import org.springframework.web.server.ServerWebInputException;
 
 import java.util.List;
 
-public final class ValidatorUtil {
-
+@Component
+@RequiredArgsConstructor
+public class LocalValidator {
     private static final String OBJECT_NAME = "object";
 
-    private ValidatorUtil() {
-    }
+    private final Validator validator;
 
-    public static <T> void validate(Validator validator, T object) {
+    public <T> void validate(T object) {
         Errors errors = new BeanPropertyBindingResult(object, OBJECT_NAME);
         validator.validate(object, errors);
 

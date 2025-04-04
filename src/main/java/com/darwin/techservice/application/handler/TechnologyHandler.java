@@ -2,13 +2,12 @@ package com.darwin.techservice.application.handler;
 
 import com.darwin.techservice.application.dto.TechnologyRequest;
 import com.darwin.techservice.application.mapper.TechnologyDtoMapper;
-import com.darwin.techservice.application.util.ValidatorUtil;
+import com.darwin.techservice.application.util.LocalValidator;
 import com.darwin.techservice.domain.api.ITechnologyServicePort;
 import com.darwin.techservice.shared.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Validator;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -18,14 +17,14 @@ import reactor.core.publisher.Mono;
 public class TechnologyHandler implements ITechnologyHandler {
     private final ITechnologyServicePort technologyServicePort;
     private final TechnologyDtoMapper technologyDtoMapper;
-    private final Validator validator;
+    private final LocalValidator validator;
 
     @Override
-    public Mono<ServerResponse> createTechnology(ServerRequest request) {
+    public Mono<ServerResponse> create(ServerRequest request) {
         return request.bodyToMono(TechnologyRequest.class)
-                .doOnNext(technologyRequest -> ValidatorUtil.validate(validator, technologyRequest))
+                .doOnNext(validator::validate)
                 .map(technologyDtoMapper::toModel)
-                .flatMap(technologyServicePort::createTechnology)
+                .flatMap(technologyServicePort::create)
                 .flatMap(technology -> ServerResponse.status(HttpStatus.CREATED)
                         .bodyValue(technologyDtoMapper.toResponse(technology)));
     }

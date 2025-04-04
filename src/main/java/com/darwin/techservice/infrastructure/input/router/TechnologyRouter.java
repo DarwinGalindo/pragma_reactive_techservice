@@ -36,10 +36,10 @@ public class TechnologyRouter {
                     path = TECHNOLOGY_RESOURCE,
                     method = RequestMethod.POST,
                     beanClass = ITechnologyHandler.class,
-                    beanMethod = "createTechnology",
+                    beanMethod = "create",
                     operation = @Operation(
                             summary = "Crea una nueva tecnología",
-                            operationId = "createTechnology",
+                            operationId = "create",
                             requestBody = @RequestBody(
                                     description = "Tecnología a crear",
                                     required = true,
@@ -136,7 +136,7 @@ public class TechnologyRouter {
     })
     public RouterFunction<ServerResponse> technologyRoutes() {
         return route()
-                .POST(TECHNOLOGY_RESOURCE, technologyHandler::createTechnology)
+                .POST(TECHNOLOGY_RESOURCE, technologyHandler::create)
                 .GET(TECHNOLOGY_RESOURCE, technologyHandler::findAllOrderedByName)
                 .GET(TECHNOLOGY_RESOURCE_ID, technologyHandler::findById)
                 .GET(TECHNOLOGY_RESOURCE_ID_EXISTS, technologyHandler::existsById)

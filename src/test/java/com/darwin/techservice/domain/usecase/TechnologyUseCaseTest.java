@@ -32,26 +32,26 @@ class TechnologyUseCaseTest {
     @Test
     void createTechnology_whenNameDoesNotExist_ShouldCreate() {
         when(technologyPersistencePort.existsTechnology(technology.getName())).thenReturn(Mono.just(false));
-        when(technologyPersistencePort.createTechnology(technology)).thenReturn(Mono.just(technology));
+        when(technologyPersistencePort.create(technology)).thenReturn(Mono.just(technology));
 
-        StepVerifier.create(technologyUseCase.createTechnology(technology))
+        StepVerifier.create(technologyUseCase.create(technology))
                 .expectNext(technology)
                 .verifyComplete();
 
         verify(technologyPersistencePort).existsTechnology(technology.getName());
-        verify(technologyPersistencePort).createTechnology(technology);
+        verify(technologyPersistencePort).create(technology);
     }
 
     @Test
     void createTechnology_whenNameAlreadyExists_ShouldThrowException() {
         when(technologyPersistencePort.existsTechnology(technology.getName())).thenReturn(Mono.just(true));
 
-        StepVerifier.create(technologyUseCase.createTechnology(technology))
+        StepVerifier.create(technologyUseCase.create(technology))
                 .expectError(TechnologyNameAlreadyExistsException.class)
                 .verify();
 
         verify(technologyPersistencePort).existsTechnology(technology.getName());
-        verify(technologyPersistencePort, never()).createTechnology(technology);
+        verify(technologyPersistencePort, never()).create(technology);
     }
 
     @Test

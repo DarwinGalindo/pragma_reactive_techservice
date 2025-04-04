@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class TechnologyR2DbcAdapterTest {
@@ -40,7 +39,7 @@ class TechnologyR2DbcAdapterTest {
         when(technologyRepository.save(technologyEntity)).thenReturn(Mono.just(technologyEntity));
         when(technologyEntityMapper.toModel(technologyEntity)).thenReturn(technology);
 
-        StepVerifier.create(technologyR2DbcAdapter.createTechnology(technology))
+        StepVerifier.create(technologyR2DbcAdapter.create(technology))
                 .expectNext(technology)
                 .verifyComplete();
 

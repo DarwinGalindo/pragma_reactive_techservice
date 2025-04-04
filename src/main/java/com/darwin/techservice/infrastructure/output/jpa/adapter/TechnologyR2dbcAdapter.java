@@ -23,7 +23,7 @@ public class TechnologyR2dbcAdapter implements ITechnologyPersistencePort {
     }
 
     @Override
-    public Mono<Technology> createTechnology(Technology technology) {
+    public Mono<Technology> create(Technology technology) {
         return technologyRepository
                 .save(technologyEntityMapper.toEntity(technology))
                 .map(technologyEntityMapper::toModel);

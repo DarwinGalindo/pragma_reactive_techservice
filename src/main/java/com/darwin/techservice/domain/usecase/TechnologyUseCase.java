@@ -16,11 +16,11 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     }
 
     @Override
-    public Mono<Technology> createTechnology(Technology technology) {
+    public Mono<Technology> create(Technology technology) {
         return technologyPersistencePort
                 .existsTechnology(technology.getName())
                 .flatMap(exists -> exists.equals(Boolean.TRUE) ? Mono.error(new TechnologyNameAlreadyExistsException())
-                        : technologyPersistencePort.createTechnology(technology));
+                        : technologyPersistencePort.create(technology));
     }
 
     @Override
