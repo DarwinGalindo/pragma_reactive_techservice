@@ -101,7 +101,6 @@ class TechnologyR2DbcAdapterTest {
                 .verifyComplete();
 
         verify(technologyRepository).findBy(pageable);
-
     }
 
     @Test

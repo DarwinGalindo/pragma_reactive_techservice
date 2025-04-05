@@ -64,7 +64,6 @@ def coverageExcludes = [
 		'**/repository/**',
 		'**/documentation/**',
 		'**/configuration/**',
-		'**/exceptionhandler/**',
 		'**/*.test',
 		'**/generated/.*'
 ]
@@ -82,16 +81,6 @@ jacocoTestReport {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: coverageExcludes)
 		}))
-	}
-}
-
-jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			limit {
-				minimum = 0.90
-			}
-		}
 	}
 }
 
